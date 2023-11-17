@@ -1,0 +1,113 @@
+/* CSS for ShopAdmin Component */
+
+/* Overall page styles */
+.body-class {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .Shopcontainer {
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  }
+  
+  .shoph1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Form styles */
+  .form-container {
+    background-color: rgba(255, 255, 255, 0);    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-container h2 {
+    margin-top: 0;
+  }
+  
+  .form-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .form-container button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .form-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Product list styles */
+
+  .product-list-container {
+    display: flex;
+    justify-content: center;
+  }
+  .product-list {
+    list-style-type: none;
+    padding: 0;
+    background-color: #fff;
+    max-width:100%;
+    
+  }
+  .form-container {
+    max-width: 100%; /* 调整宽度为与列表相匹配 */
+  }
+  
+  .product-item {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .product-item button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .product-item button:hover {
+    background-color: #c82333;
+  }
+  
+  .product-item button.edit-button {
+    background-color: #ffc107;
+    color: #000;
+  }
+  
+  .product-item button.edit-button:hover {
+    background-color: #e0a800;
+  }
+
+.ordersadminlist{
+  justify-content: center;
+  align-items: center;
+}
+.orderslist{
+  display:contents;
+  /* background-color: #000; */
+  align-items: center;
+}

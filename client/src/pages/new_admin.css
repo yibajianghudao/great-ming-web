@@ -1,0 +1,53 @@
+.table-container {
+    margin: 0 auto; /* 居中 */
+    width: 100%; /* 设置容器宽度 */
+  }
+
+#Admincustomers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 60%;
+  }
+  
+  #Admincustomers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #Admincustomers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #Admincustomers tr:hover {background-color: #ddd;}
+  
+  #Admincustomers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #04AA6D;
+    color: white;
+  }
+
+
+.adminshow {
+  text-align: center;
+  /* max-height: none; */
+}
+.adminul {
+  background-color: #333;
+  overflow:visible;
+  text-align: center; /* 让 ul 内容居中 */
+}
+.adminul label {
+  background-color: #333;
+}
+
+
+.adminli {
+  width: 50%; /* 调整为适当的宽度 */
+  display: inline-block; /* 使每个列水平排列 */
+  text-align: center; /* 文本居中对齐 */
+}
+
+.adminli label {
+  background-color: #333;
+}

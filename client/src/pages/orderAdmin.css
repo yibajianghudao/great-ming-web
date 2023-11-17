@@ -1,0 +1,42 @@
+/* 在您的 CSS 文件中添加以下样式 */
+.order-item {
+    text-align: center;
+  }
+  
+  
+  
+  .order-delete-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px; /* 可以调整按钮之间的水平间距 */
+  }
+  
+  /* 鼠标悬停时的按钮样式 */
+  .order-delete-button:hover {
+    background-color: #0056b3;
+  }
+
+  .order-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: rgba(255, 255, 255, 0);
+  }
+  
+  .order-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: calc(50% - 20px); /* 让每个订单项占据50%的宽度，减去边距 */
+    box-sizing: border-box; /* 确保边框和内边距不增加元素宽度 */
+  }

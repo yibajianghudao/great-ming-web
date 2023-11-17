@@ -1,0 +1,106 @@
+.shopshow {
+    text-align: center;
+    /* max-height: none; */
+}
+.shopul {
+    background-color: transparent;
+    overflow:visible;
+}
+.shopli {
+    max-height: none;
+    
+}
+
+
+/* 商品容器样式 */
+.product-container {
+    border-radius: 25px;
+
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  /* 商品图片样式 */
+  .product-image {
+    
+    flex: 1; /* 占据左半部分 */
+  }
+  
+  .product-image img {
+    border-radius: 25px;
+
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* 商品属性和按钮样式 */
+  .product-details {
+    
+    flex: 1; /* 占据右半部分 */
+    display: flex; /* 启用 flex 布局 */
+    flex-direction: column; /* 垂直布局，使文本竖直居中 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
+  }
+  
+  .product-details h3 {
+    font-family:cursive;
+    font-size: 25px;
+    margin: 0;
+    padding-bottom: 5px;
+  }
+  
+  .product-details p {
+    font-family:cursive;
+    font-size: 20px;
+    margin: 0;
+    padding: 3px 0;
+  }
+  
+  .buy-button {
+    border-radius: 25px;
+    font-family:cursive;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 50px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .buy-button:hover {
+    background-color: #0056b3;
+  }
+  
+
+  /* modal.css */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.homeHeader {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    height: 100px;
+}
+
+.homeHeader h1 {
+    margin: 0;
+    font-family: 'JetBrains Mono', sans-serif; /* Replace with your desired font */
+    font-size: 50px;
+
+}
+.homeNav {
+    display: flex;
+    /*width: 500px;*/
+    flex-grow: 0.6;
+    justify-content: center;
+    align-items: center;
+    background-color: #444;
+    padding: 20px 0;
+}
+.homeNav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 60px;
+    font-size: 18px; /* Adjust font size as needed */
+}
+.homeLogin {
+    display: flex;
+    align-items: center;
+}
+
+.homeLogin p{
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    height: 100%; /* 让元素占满父容器的高度 */
+    margin: 0; /* 重置默认的外边距 */
+}
+/*.homeLogin button {*/
+/*    background-color: #f2f2f2;*/
+/*    border: none;*/
+/*    padding: 15px 30px;*/
+/*    border-radius: 5px;*/
+/*    cursor: pointer;*/
+/*    font-size: 16px;*/
+/*    color: #333;*/
+/*}*/
+
+/*
+轮播图
+ */
+.carousel-container {
+    position: absolute;
+    top: 100px;
+    left: 500px;
+    width: 800px;
+    height: 372px;
+    border: 1px solid #ccc;
+    max-width: 800px; /* Adjust this value as needed */
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+.announcement {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 300px;
+    height: 500px;
+    border: 1px solid #61dafb;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.announcement h1 {
+    font-family: 'JetBrains Mono', sans-serif; /* Replace with your desired font */
+    font-size: 50px;
+}
+
+.shop{
+    position: absolute;
+    top: 600px;
+    left: 0px;
+    width: 300px;
+    height: 500px;
+    border: 1px solid #ccc;
+}
+
+.hotspot{
+    position: absolute;
+    top: 600px;
+    left: 400px;
+    width: 1000px;
+    height: 500px;
+    border: 1px solid #ccc;
+}
+
+.greatmingimg{
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background-image: url("../img/GreatMing.jpg");
+    background-size: 300px 300px;
+    background-repeat: no-repeat;
+}
+
+.group{
+    position: absolute;
+    top: 400px;
+    right: 0;
+    width: 300px;
+    height: 700px;
+    border: 1px solid #ccc;
+}

@@ -1,0 +1,1 @@
+export const ApiUrl = process.env.REACT_APP_GreatMingWeb_API_BASE_URL;

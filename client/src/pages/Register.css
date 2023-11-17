@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.register-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* 或其他适当的高度 */
+}
+.register-wrapper fieldset {
+    /*padding: 200px; !* 添加内边距 *!*/
+    height: 100%; /* 设置高度 */
+}

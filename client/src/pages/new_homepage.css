@@ -1,0 +1,225 @@
+.main-container {
+    /* 设置外部容器的样式，可以包含背景颜色等 */
+    position: relative;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* 覆盖整个容器 */
+    height: 100%; /* 覆盖整个容器 */
+    background-image: url('../img/qikan.jpg'); /* 替换为您的背景图 URL */
+    background-size: cover; /* 适应容器大小 */
+    background-repeat: no-repeat; /* 防止重复 */
+    opacity: 0.5; /* 根据需要设置透明度 */
+    z-index: -1; /* 将背景图层级设为 -1，以便内容位于上层 */
+}
+
+
+.header {
+    padding: 30px;
+    
+    /* background-color:rgba(0,52,151); */
+    /* background-color: white; */
+    max-height: 300px;
+    min-width: 300px;
+  }
+
+.header .name {
+    text-align: center;
+}
+.header .name img {
+    border-radius: 25px;
+    width: auto;
+    height: 200px;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    
+}
+.header .Img h1 {
+    font-size: 50px;
+}
+
+.ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /* background-color: #999; */
+    overflow: hidden;
+    background-color:rgba(0,52,151);
+    /* background-image: url('../img/GreatMing.jpg');
+    background-size:cover; */
+    
+}
+
+
+.li {
+    float: left;
+    max-height: 70px;
+    border-right: 1px solid #bbb;
+    
+
+}
+
+.li img {
+    
+    width: auto;
+    height: 70px;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+}
+.li a {
+    color: white;
+    
+    padding: 20px 30px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+
+.LoginInfo {
+    /* float: left; */
+    max-height: 70px;
+    border-right: 1px solid #bbb;
+    float: right
+}
+.LoginInfo a {
+  color: white;
+  
+  padding: 20px 30px;
+  display: inline-block;
+  text-decoration: none;
+}
+.li>a.active {
+    /* background-color: rgb(0, 6, 128); */
+    background-image: url('../img/GreatMing.jpg');
+}
+
+.li>a:hover:not(a.active),
+.dropbtn:hover {
+    background-color: #555;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    /* 默认相对于<html>进行绝对定位 */
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .2);
+}
+
+.dropdown-content a {
+    color: black;
+    display: block;
+    padding: 20px 30px;
+    /* 因为<a>标签不是块元素，min-width:100px不会生效 */
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: deepskyblue;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+
+
+/*轮播图*/
+.carousel-container {
+    border-radius: 25px;
+    position:static;
+    /* top: 100px; */
+    /* left: 500px; */
+    width: 800px;
+    height: 400px;
+    /* border: 1px solid #ccc; */
+    max-width: 800px; /* Adjust this value as needed */
+    margin:auto;
+    margin-top: 3%;
+    overflow: hidden;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+  /* 底部 */
+.footer {
+    padding: 20px;
+    text-align: center;
+    /* background: #ddd; */
+    margin-top: 20px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row; /* 默认为横向布局 */
+  }
+  
+  .left, .center, .right {
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    border: none;
+    flex: 0 1 auto /* 所有列不等宽 */
+  }
+  .center{
+    padding: 10px;
+  }
+  .right {
+    padding: 30px;
+    font-family:cursive;
+  }
+  .right p {
+    font-size: 25px;
+  }
+
+  .next-left, .next-center, .next-right {
+    padding: 30px;
+    /* border: 1px solid #ccc; */
+    border: none;
+    flex: 1
+  }
+  .next-left{
+
+    padding: 8%;
+  }
+  .next-left h1{
+    text-align: center;
+  }
+  .next-center{
+    padding: 8%;
+    min-width: 30%;
+  }
+  .next-center p {
+    font-size: 25px;
+  }
+  .next-right{
+    padding: 8%;
+  }
+
+
+
+
+  
+  /* 媒体查询 - 当屏幕宽度小于600px时 */
+  @media (max-width: 1000px) {
+    .container {
+      flex-direction: column; /* 切换为纵向布局 */
+    }
+  
+    .left, .center, .right {
+      flex: 1;
+    }
+  }
