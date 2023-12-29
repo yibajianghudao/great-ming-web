@@ -172,6 +172,20 @@ function BalanceCount({ currentUser }) {
             }
         }
 
+        const AKlines = validUsernames.split('\n');
+        for (const line of AKlines) {
+            const [username, tag, attendance, kills] = line.replace('username:', '').replace('company:', '').replace('attendance:', '').replace('kills:', '').split(',');
+            console.log(`${username}增加军饷`)
+            try {
+                const response = await increaseAK(username, attendance, kills);
+                successMessages.push(`增加用户 ${username} 的 balance：${response.data}`);
+                console.log(`${username}增加军饷消息`)
+            } catch (error) {
+                errorMessages.push(`更新用户 ${username} 的 balance 时发生错误：${error.message}`);
+                console.log(`${username}增加军饷错误`)
+            }
+        }
+
 
         // 显示成功和错误消息
         if (successMessages.length > 0) {
@@ -188,6 +202,14 @@ function BalanceCount({ currentUser }) {
         return axios.post(`${ApiUrl}/increaseBalance`, {
             username,
             count
+        });
+    };
+    // 调用API增加出勤和击杀
+    const increaseAK = (username, attendance, kills) => {
+        return axios.post(`${ApiUrl}/increaseAK`, {
+            username,
+            attendance,
+            kills
         });
     };
 

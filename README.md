@@ -14,6 +14,12 @@
 #### `./client/src/python/LogRead.py`和`./client/src/python/logreaded/mouth.py`
 需要将其中的目录换成Windows/Linux，已经写好，直接取消注释即可(其实有很简单的适配方法，着急上线，下次一定修复！)
 
+
+#### 创建文件夹
+读取文件和总结文件时，需要创建好对应的月份文件夹，比如0124log文件，则需要创建./client/src/python/logreaded/01文件夹
+统计军饷，在上传总结好的文件之前，需要先创建./client/src/python/balancefiles/文件夹
+
+
 ## 使用须知：
 本网站为骑砍·拿破仑战队 大明帝国 自建网站
 
@@ -80,7 +86,9 @@ Npm:V10.2.3
    sharp_binary_host = https://npm.taobao.org/mirrors/sharp
    ``````
 
-   然后重新npm install即可解决
+   然后重新npm install即可
+
+   如果依然无法解决，请尝试使用科学上网的全局代理模式(tun模式)
 
 3. 如果遇到:卡在`reify:prettier: timing reifyNode:node_modules/@nrwl/workspace Completed in 12729ms`(如果使用的ssh远程部署，多半会直接卡死，需要重启云服务器):
 

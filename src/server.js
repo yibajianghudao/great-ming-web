@@ -779,6 +779,31 @@ app.post('/increaseBalance', (req, res) => {
     );
 });
 
+// 更新用户的出勤击杀数据
+app.post('/increaseAK', (req, res) => {
+    const { username, attendance, kills } = req.body;
+
+    // 构建更新用户的 balance 查询语句，使用LOWER函数使查询不区分大小写
+    const updateBalanceQuery = `
+    UPDATE users 
+    SET attendance = attendance + ?, kills = kills + ?
+    WHERE LOWER(username) = LOWER(?)
+    `;
+
+    db.query(
+        updateBalanceQuery,
+        [attendance, kills,  username],
+        (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: '更新用户 balance 时发生错误' });
+            } else {
+                res.status(200).json({ message: '用户 balance 已更新' });
+            }
+        }
+    );
+});
+
 const cron = require('node-cron');
 
 cron.schedule('0 0 1 * *', () => {
