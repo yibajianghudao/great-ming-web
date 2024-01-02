@@ -804,54 +804,55 @@ app.post('/increaseAK', (req, res) => {
     );
 });
 
-const cron = require('node-cron');
+// 用于每月按照军衔发放军饷，暂时弃用
+// const cron = require('node-cron');
 
-cron.schedule('0 0 1 * *', () => {
-    try {
-        // 在这里编写逻辑来更新队友的 balance
-        db.query('SELECT * FROM users', (error, teammates) => {
-            if (error) {
-                console.error('查询队友时出错：', error);
-                return;
-            }
+// cron.schedule('0 0 1 * *', () => {
+//     try {
+//         // 在这里编写逻辑来更新队友的 balance
+//         db.query('SELECT * FROM users', (error, teammates) => {
+//             if (error) {
+//                 console.error('查询队友时出错：', error);
+//                 return;
+//             }
 
-            teammates.forEach(teammate => {
-                // 根据 teammate.ranks 计算增加的 balance
-                const balanceToAdd = calculateBalanceBasedOnRanks(teammate.ranks);
+//             teammates.forEach(teammate => {
+//                 // 根据 teammate.ranks 计算增加的 balance
+//                 const balanceToAdd = calculateBalanceBasedOnRanks(teammate.ranks);
 
-                // 更新数据库中的 balance
-                db.query('UPDATE users SET balance = balance + ? WHERE username = ?', [balanceToAdd, teammate.username], (err, result) => {
-                    if (err) {
-                        console.error(`更新用户 ${teammate.username} 的 balance 时出错：`, err);
-                    }
-                });
-            });
+//                 // 更新数据库中的 balance
+//                 db.query('UPDATE users SET balance = balance + ? WHERE username = ?', [balanceToAdd, teammate.username], (err, result) => {
+//                     if (err) {
+//                         console.error(`更新用户 ${teammate.username} 的 balance 时出错：`, err);
+//                     }
+//                 });
+//             });
 
-            console.log('已更新所有队友的 balance');
-        });
-    } catch (error) {
-        console.error('更新 balance 时出错：', error);
-    }
-});
+//             console.log('已更新所有队友的 balance');
+//         });
+//     } catch (error) {
+//         console.error('更新 balance 时出错：', error);
+//     }
+// });
 
 
-// 根据队友的 ranks 计算增加的 balance 的逻辑
-function calculateBalanceBasedOnRanks(ranks) {
-    let balanceToAdd = 0;
+// // 根据队友的 ranks 计算增加的 balance 的逻辑
+// function calculateBalanceBasedOnRanks(ranks) {
+//     let balanceToAdd = 0;
 
-    if (ranks.includes('YB')) {
-        balanceToAdd = 1;
-    }
+//     if (ranks.includes('YB')) {
+//         balanceToAdd = 1;
+//     }
 
-    if (ranks.includes('BH') || ranks.includes('XW')) {
-        balanceToAdd = 2;
-    }
+//     if (ranks.includes('BH') || ranks.includes('XW')) {
+//         balanceToAdd = 2;
+//     }
 
-    if (ranks.includes('QH') || ranks.includes('DW')) {
-        balanceToAdd = 3;
-    }
-    return balanceToAdd;
-}
+//     if (ranks.includes('QH') || ranks.includes('DW')) {
+//         balanceToAdd = 3;
+//     }
+//     return balanceToAdd;
+// }
 
 // 备份数据库
 app.get('/backup/make', (req, res) => {    // 生成唯一的文件名，使用当前时间戳
