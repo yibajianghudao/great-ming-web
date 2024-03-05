@@ -2,7 +2,7 @@
 ## nginx配置：
 你需要在配置文件中对端口进行配置，使客户端请求转发到3001端口，/api请求转发到3000端口（用于解决跨域请求问题）
 例如:(如果该配置文件中有http{}块，server块应置于http{}中)
-'''
+```
 server {
       # 监听IPV4
       listen 80 default_server;
@@ -15,15 +15,15 @@ server {
       # API请求
       location /api {proxy_pass http://127.0.0.1:3000;}
 }
-'''
+```
 如果你想要禁止IP直接访问的话，你可以删除listen 80/[::80] 后的default_server，然后在该配置文件中添加:
-'''
+```
 server {
       listen 80 default_server;
       server_name _;
       return 403;
 }
-'''
+```
 ## 配置:
 #### package.json：
 
@@ -38,11 +38,6 @@ server {
 
 #### `./client/src/python/LogRead.py`和`./client/src/python/logreaded/mouth.py`
 需要将其中的目录换成Windows/Linux，已经写好，直接取消注释即可(其实有很简单的适配方法，着急上线，下次一定修复！)
-
-
-#### 创建文件夹
-读取文件和总结文件时，需要创建好对应的月份文件夹，比如0124log文件，则需要创建./client/src/python/logreaded/01文件夹
-统计军饷，在上传总结好的文件之前，需要先创建./client/src/python/balancefiles/文件夹
 
 
 ## 使用须知：
