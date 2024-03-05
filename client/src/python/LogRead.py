@@ -2,6 +2,13 @@ import os
 import chardet
 import codecs
 
+# Windows平台:
+# input_directory = r"./client/src/python/log\\"
+# output_directory = r"./client/src/python/logreaded\\"
+# Linux平台:
+input_directory = r"./client/src/python/log/"
+output_directory = r"./client/src/python/logreaded/"
+
 def find_TK(str1):
     #str1="19:11:31 - C8C_SPC_Preacher teamkilled 61e_Yorkist. "
     #str_ch=" 20:07:25 - 74th_KnWe_dunh[kfive]误 杀 7PUSL_IV_RN_Sierz_BT。  "
@@ -87,11 +94,5 @@ def process_log_files(input_dir, output_dir):
 
 
 # 在Node.js服务器中执行Python脚本时，脚本的当前工作目录与Python脚本所在的目录不同。
-# Windows平台:
-# input_directory = r"./client/src/python/log\\"
-# output_directory = r"./client/src/python/logreaded\\"
-# Linux平台:
-input_directory = r"./client/src/python/log/"
-output_directory = r"./client/src/python/logreaded/"
 process_log_files(input_directory, output_directory)
 
