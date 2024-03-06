@@ -76,11 +76,11 @@ function Homepage({currentUser = ""}) {
                     ) : (
                         <li class='li'><a href="Login">个人信息</a></li>
                     )}
-                    {currentUser ? (
-                        <li class='li'><a href="http://47.236.16.156:4000/zh">ChatGPT</a></li>
-                        ) : (
-                        <li class='li'><a href="http://47.236.16.156:4000/zh">ChatGPT</a></li>
-                    )}
+                    {/*{currentUser ? (*/}
+                    {/*    <li class='li'><a href="http://47.236.16.156:4000/zh">ChatGPT</a></li>*/}
+                    {/*    ) : (*/}
+                    {/*    <li class='li'><a href="http://47.236.16.156:4000/zh">ChatGPT</a></li>*/}
+                    {/*)}*/}
                     {admin ? (
                         <li class='li'><a href="Admin">管理员界面</a></li>
                     ) : (
@@ -120,7 +120,7 @@ function Homepage({currentUser = ""}) {
                 </div>
                 <div class="right">
                     <h1>更新公告</h1>
-                    <p>修复了贷款问题，新增数据库备份与还原功能，新增ChatGPT3.5的使用，以后会发布4.0版本</p>
+                    <p>由于上游仓库关闭，暂时停止ChatGPT的使用</p>
                     <p>修复了因为服务器在正德那边导致的经常连不上的问题，目前服务器部署在新加坡，建议关闭梯子使用，进不去服务器请联系管理重启服务器</p>
                     <p>如果遇到Bug或有什么好的建议请给江湖刀发邮件(见本页面最下方小字)，方便集中统计和军饷发放，感谢！</p>
                 </div>
