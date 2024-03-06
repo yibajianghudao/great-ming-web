@@ -31,7 +31,9 @@ server {
 
 #### ./.env:
 
-`REACT_APP_GreatMingWeb_PYTHON_PATH='/path/to/python'`替换为你的Python解释器位置(如果你不知道python解释器的位置，在终端输入:`where python`)
+~~`REACT_APP_GreatMingWeb_PYTHON_PATH='/path/to/python'`替换为你的Python解释器位置(如果你不知道python解释器的位置，在终端输入:`where python`)~~
+
+请先暂时在/src/server.js中配置pythonPath为你的路径
 
 #### ./cilent/.env:
 将`REACT_APP_GreatMingWeb_API_BASE_URL=http://localhost:3000`中的`localhost修改为你的本机IP(或配置为域名)
