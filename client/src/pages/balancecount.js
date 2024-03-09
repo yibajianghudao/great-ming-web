@@ -144,7 +144,7 @@ function BalanceCount({ currentUser }) {
                 
                 
 
-            balanceTextArray.push(`姓名：${username},增加的军饷数：${balanceToAdd}`);
+            balanceTextArray.push(`姓名：${username},增加的军饷数：${balanceToAdd},出勤数${attendance}`);
         });
 
         return balanceTextArray.join('\n');
@@ -160,10 +160,10 @@ function BalanceCount({ currentUser }) {
 
 
         for (const line of lines) {
-            const [username, balance] = line.replace('姓名：', '').replace('增加的军饷数：', '').split(',');
+            const [username, balance,attendance] = line.replace('姓名：', '').replace('增加的军饷数：', '').replace('出勤数', '').split(',');
             console.log(`${username}增加军饷`)
             try {
-                const response = await increaseBalanceByUsername(username, balance,balanceFiles);
+                const response = await increaseBalanceByUsername(username, balance,balanceFiles,attendance);
                 successMessages.push(`增加用户 ${username} 的 balance：${response.data}`);
                 console.log(`${username}增加军饷消息`)
             } catch (error) {
@@ -198,11 +198,12 @@ function BalanceCount({ currentUser }) {
     };
 
     // 新添加的函数，用于调用API增加balance
-    const increaseBalanceByUsername = (username, count,balanceFiles) => {
+    const increaseBalanceByUsername = (username, count,balanceFiles,attendance) => {
         return axios.post(`${ApiUrl}/increaseBalance`, {
             username,
             count,
-            balanceFiles
+            balanceFiles,
+            attendance
         });
     };
     // 调用API增加出勤和击杀

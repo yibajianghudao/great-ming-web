@@ -757,46 +757,69 @@ app.get('/api/readBalanceFile/:filename', (req, res) => {
 
 // 更新用户的军饷数据
 app.post('/api/increaseBalance', (req, res) => {
-    const { username, count,balanceFiles } = req.body;
-
-    // Get the current date and time
+    const { username, count, balanceFiles ,attendance} = req.body;
     const currentTime = new Date();
+    const month = balanceFiles.split('.')[0]; // Assuming balanceFiles is like '01.txt'
     
-    // Extract the month from the balanceFiles name (assuming the format is like '01.txt')
-    const month = balanceFiles.split('.')[0]; // This will get '01' from '01.txt'
 
-    // Construct the description using the extracted month
-    const description = `${month} 月击杀军饷。`;
+    
+    // Rank-based balance increments
+    const balanceByRank = {
+        'YB[III]': 1,
+        'YB[II]': 1,
+        'YB[I]': 1,
+        'BH': 2,
+        'XW':2,
+        'QH': 3,
+        'DW[II]':3,
+        'DW[I]':3,
+        'CH': 3,
+        'ZH': 3,
+        'DZH': 3,
+        'TZ': 3,
+    };
 
+    // Query to get the user's rank
+    const lookForRankQuery = 'SELECT ranks FROM users WHERE username = ?';
 
-
-
-    // 构建更新用户的 balance 查询语句，使用LOWER函数使查询不区分大小写
-    const updateBalanceQuery = `
-    UPDATE users 
-    SET balance = balance + ?
-    WHERE LOWER(username) = LOWER(?)
-    `;
-    const recordTransactionQuery = `
-    INSERT INTO transations (username, times, amount, descriptions) VALUES (?, ?, ?, ?)
-    `;
-
-    // First, update the user's balance
-    db.query(updateBalanceQuery, [count, username], (err, result) => {
+    db.query(lookForRankQuery, [username], (err, result) => {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: '更新用户 balance 时发生错误' });
+            return res.status(500).json({ error: '查询用户军衔记录时发生错误' });
         }
-
-        // Then, record the transaction
-        db.query(recordTransactionQuery, [username, currentTime, count, description], (err, result) => {
+        const userRank = result[0].ranks; // Assuming the rank is stored in the ranks column
+        const rankBalance = balanceByRank[userRank] || 0; // Get the balance based on rank
+        let description_salary = `${month} 月军饷 ${rankBalance} 击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
+        //console.log(attendance)
+        if (attendance >=3){
+            const totalBalance = parseInt(count, 10) + rankBalance;
+            description_salary = `${month} 月军饷 ${totalBalance} 击杀军饷：${count} 出勤满三次，额外军衔 ${userRank} 奖励：${rankBalance}`;
+        }
+        else{
+            const totalBalance = parseInt(count, 10);
+            description_salary = `${month} 月军饷 ${totalBalance} 击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
+        }
+        
+        const totalBalance = parseInt(count, 10);
+        const updateBalanceQuery = 'UPDATE users SET balance = balance + ? WHERE LOWER(username) = LOWER(?)';
+        db.query(updateBalanceQuery, [totalBalance, username], (err, updateResult) => {
             if (err) {
                 console.error(err);
-                return res.status(500).json({ error: '更新用户 Transaction 记录时发生错误' });
+                return res.status(500).json({ error: '更新用户军饷时发生错误' });
             }
 
-            res.status(200).json({ message: '用户 balance 和 Transaction 记录已更新' });
+            const recordTransactionQuery = 'INSERT INTO transations (username, times, amount, descriptions) VALUES (?, ?, ?, ?)';
+            
+            db.query(recordTransactionQuery, [username, currentTime, totalBalance, description_salary], (err, transactionResult) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: '记录用户军饷发放记录时发生错误' });
+                }
+
+                res.status(200).json({ message: '用户军饷已更新，且记录已添加' });
+            });
         });
+
     });
 });
 
