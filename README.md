@@ -183,6 +183,7 @@ ALTER TABLE users
 ADD COLUMN avatar VARCHAR(255) NULL;
 ```
 ### Transations
+```mysql
 CREATE TABLE Transations (
 Transationid int NOT NULL AUTO_INCREMENT,
 username varchar(32),
@@ -191,7 +192,7 @@ amount varchar(32),
 descriptions varchar(255),
 PRIMARY KEY (Transationid)
 );
-
+```
 
 ## 启动方法：
 
