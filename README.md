@@ -41,6 +41,12 @@ server {
 #### `./client/src/python/LogRead.py`和`./client/src/python/logreaded/mouth.py`
 需要将其中的目录换成Windows/Linux，已经写好，直接取消注释即可(其实有很简单的适配方法，着急上线，下次一定修复！)
 
+### 关于网站使用一段时间后服务端无法正常使用的bug：
+由于api没有自动关闭连接，sql服务器会在收到一定的数据之后关闭连接，目前的缓解方法是：通过修改服务器上的配置文件:
+`/etc/mysql/mariadb.conf.d/50-server.cnf`
+中的：
+`max_allowed_packet=16m`修改为64即可。
+
 
 ## 使用须知：
 本网站为骑砍·拿破仑战队 大明帝国 自建网站
