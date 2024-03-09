@@ -789,16 +789,16 @@ app.post('/api/increaseBalance', (req, res) => {
         }
         const userRank = result[0].ranks; // Assuming the rank is stored in the ranks column
         const rankBalance = balanceByRank[userRank] || 0; // Get the balance based on rank
-        let description_salary = `${month} 月军饷   ${rankBalance}   击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
+        let description_salary = `${month} 月军饷   ${rankBalance}   出勤击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
         let totalBalance = parseInt(count, 10);
         //console.log(attendance)
         if (attendance >=3){
             totalBalance = parseInt(count, 10) + rankBalance;
-            description_salary = `${month} 月军饷 ${totalBalance} 击杀军饷：${count} 出勤满三次，额外军衔 ${userRank} 奖励：${rankBalance}`;
+            description_salary = `${month} 月军饷 ${totalBalance} 出勤击杀军饷：${count} 出勤满三次，额外军衔 ${userRank} 奖励：${rankBalance}`;
         }
         else{
             totalBalance = parseInt(count, 10);
-            description_salary = `${month} 月军饷 ${totalBalance} 击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
+            description_salary = `${month} 月军饷 ${totalBalance} 出勤击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
         }
         
         

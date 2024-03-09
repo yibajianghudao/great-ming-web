@@ -184,7 +184,7 @@ ADD COLUMN avatar VARCHAR(255) NULL;
 ```
 ### Transations
 ```mysql
-CREATE TABLE Transations (
+CREATE TABLE transations (
 Transationid int NOT NULL AUTO_INCREMENT,
 username varchar(32),
 times varchar(32),
