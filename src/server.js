@@ -789,18 +789,19 @@ app.post('/api/increaseBalance', (req, res) => {
         }
         const userRank = result[0].ranks; // Assuming the rank is stored in the ranks column
         const rankBalance = balanceByRank[userRank] || 0; // Get the balance based on rank
-        let description_salary = `${month} 月军饷 ${rankBalance} 击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
+        let description_salary = `${month} 月军饷   ${rankBalance}   击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
+        let totalBalance = parseInt(count, 10);
         //console.log(attendance)
         if (attendance >=3){
-            const totalBalance = parseInt(count, 10) + rankBalance;
+            totalBalance = parseInt(count, 10) + rankBalance;
             description_salary = `${month} 月军饷 ${totalBalance} 击杀军饷：${count} 出勤满三次，额外军衔 ${userRank} 奖励：${rankBalance}`;
         }
         else{
-            const totalBalance = parseInt(count, 10);
+            totalBalance = parseInt(count, 10);
             description_salary = `${month} 月军饷 ${totalBalance} 击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
         }
         
-        const totalBalance = parseInt(count, 10);
+        
         const updateBalanceQuery = 'UPDATE users SET balance = balance + ? WHERE LOWER(username) = LOWER(?)';
         db.query(updateBalanceQuery, [totalBalance, username], (err, updateResult) => {
             if (err) {
