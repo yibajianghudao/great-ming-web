@@ -757,7 +757,19 @@ app.get('/api/readBalanceFile/:filename', (req, res) => {
 
 // 更新用户的军饷数据
 app.post('/api/increaseBalance', (req, res) => {
-    const { username, count } = req.body;
+    const { username, count,balanceFiles } = req.body;
+
+    // Get the current date and time
+    const currentTime = new Date();
+    
+    // Extract the month from the balanceFiles name (assuming the format is like '01.txt')
+    const month = balanceFiles.split('.')[0]; // This will get '01' from '01.txt'
+
+    // Construct the description using the extracted month
+    const description = `${month} 月击杀军饷。`;
+
+
+
 
     // 构建更新用户的 balance 查询语句，使用LOWER函数使查询不区分大小写
     const updateBalanceQuery = `
@@ -765,19 +777,27 @@ app.post('/api/increaseBalance', (req, res) => {
     SET balance = balance + ?
     WHERE LOWER(username) = LOWER(?)
     `;
+    const recordTransactionQuery = `
+    INSERT INTO transations (username, times, amount, descriptions) VALUES (?, ?, ?, ?)
+    `;
 
-    db.query(
-        updateBalanceQuery,
-        [count, username],
-        (err, result) => {
+    // First, update the user's balance
+    db.query(updateBalanceQuery, [count, username], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: '更新用户 balance 时发生错误' });
+        }
+
+        // Then, record the transaction
+        db.query(recordTransactionQuery, [username, currentTime, count, description], (err, result) => {
             if (err) {
                 console.error(err);
-                res.status(500).json({ error: '更新用户 balance 时发生错误' });
-            } else {
-                res.status(200).json({ message: '用户 balance 已更新' });
+                return res.status(500).json({ error: '更新用户 Transaction 记录时发生错误' });
             }
-        }
-    );
+
+            res.status(200).json({ message: '用户 balance 和 Transaction 记录已更新' });
+        });
+    });
 });
 
 // 更新用户的出勤击杀数据
@@ -925,6 +945,44 @@ app.post('/api/backup/restore/:fileName', (req, res) => {
     }
 });
 
+//设置头像上传
+const storageAva  = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'avatars'); // Make sure this directory exists
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload_avatar = multer({ storage:storageAva });
+
+//头像上传API
+app.post('/api/users/:username/avatar', upload_avatar.single('avatar'), (req, res) => {
+    const username = req.params.username;
+    const file = req.file;
+
+    if (!file) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    const filePath = '/avatars/' + file.filename; // Adjust the path as necessary
+
+    // Here, update your database record for the user with the new avatar file path
+    const query = 'UPDATE users SET avatar = ? WHERE username = ?';
+    db.query(query, [filePath, username], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error updating user avatar.');
+        }
+
+        res.json({
+            message: 'Avatar uploaded successfully',
+            avatar: filePath
+        });
+    });
+});
 
 
 

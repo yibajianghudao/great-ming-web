@@ -9,6 +9,9 @@ import {ApiUrl} from "./config";
 function Info({ currentUser }) {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true); // Added a loading state
+    const [avatar, setAvatar] = useState(null);  // State to hold the selected file
+
+
 
     useEffect(() => {
         console.log(currentUser);
@@ -33,7 +36,31 @@ function Info({ currentUser }) {
         }
     }, [currentUser]);
 
-    
+    const handleFileChange = (event) => {
+        setAvatar(event.target.files[0]); // Set the selected file
+    };
+
+    const uploadAvatar = () => {
+        const formData = new FormData();
+        formData.append('avatar', avatar); // Use the name 'avatar' that the server expects
+
+        axios.post(`${ApiUrl}/users/${currentUser}/avatar`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            alert('Avatar uploaded successfully');
+            setUser({ ...user, avatar: response.data.avatar });
+        })
+        .catch(error => {
+            console.error('Error uploading avatar:', error);
+            alert('Error uploading avatar');
+        });
+    };
+
+
+
     let admin = false;
     if (user.tag === "Admin") {
         admin = true;
@@ -95,7 +122,6 @@ function Info({ currentUser }) {
             
             
             <div className="info">
-                <h1>队员信息</h1>
                 {/* Example data rendering */}
                 {loading ? (  // 有条件地渲染加载内容
                     <div>
@@ -103,6 +129,12 @@ function Info({ currentUser }) {
                         <p>听说智祖喜欢borgo，只是不愿意表达</p>
                     </div>
                 ) : (
+                    <div>
+                    <h1>队员信息</h1>
+                    <img src={user.avatar} alt="User Avatar" />
+                    <input type="file" onChange={handleFileChange} />
+                    <button onClick={uploadAvatar}>上传头像</button>
+
                     <table id="customers">
   <tr>
     <th>姓名</th>
@@ -147,8 +179,9 @@ function Info({ currentUser }) {
     <td>账号创建时间</td>
     <td>{user.create_at}</td>
 
-  </tr>
-</table>
+    </tr>
+    </table>
+    </div>
                     
                     // <table>
                     //     <thead>

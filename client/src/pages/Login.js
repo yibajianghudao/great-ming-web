@@ -34,14 +34,21 @@ export default function Login({ setToken  }) {
           password
         });
         setToken(response);
-        setCurrentUser(response.user.username); // 设置当前用户
-        sessionStorage.setItem('currentUser', response.user.username);
-        //console.log(response.user.username);
-        //console.log(currentUser);
-        // 成功登录后导航到 Home
-        navigate('/');
-        // 跳转后刷新页面，以重新渲染组件，显示欢迎信息
-        window.location.reload();
+        if (response.token== 'denied'){  //打错密码就弹窗警告
+          alert('Incorrect username or password. Please try again.');
+        }
+
+        else{
+          setCurrentUser(response.user.username); // 设置当前用户
+          sessionStorage.setItem('currentUser', response.user.username);
+          //console.log(response.user.username);
+          //console.log(currentUser);
+          // 成功登录后导航到 Home
+          navigate('/');
+          // 跳转后刷新页面，以重新渲染组件，显示欢迎信息
+          window.location.reload();
+        }
+
       }
 
     return(

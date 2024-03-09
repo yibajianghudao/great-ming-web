@@ -152,7 +152,7 @@ function BalanceCount({ currentUser }) {
 
 
     // 新添加的函数，用于增加balance
-    const addBalance = async () => {
+    const addBalance = async (balanceFiles) => {
         const lines = balanceResultText.split('\n');
         const successMessages = [];
         const errorMessages = [];
@@ -163,7 +163,7 @@ function BalanceCount({ currentUser }) {
             const [username, balance] = line.replace('姓名：', '').replace('增加的军饷数：', '').split(',');
             console.log(`${username}增加军饷`)
             try {
-                const response = await increaseBalanceByUsername(username, balance);
+                const response = await increaseBalanceByUsername(username, balance,balanceFiles);
                 successMessages.push(`增加用户 ${username} 的 balance：${response.data}`);
                 console.log(`${username}增加军饷消息`)
             } catch (error) {
@@ -198,10 +198,11 @@ function BalanceCount({ currentUser }) {
     };
 
     // 新添加的函数，用于调用API增加balance
-    const increaseBalanceByUsername = (username, count) => {
+    const increaseBalanceByUsername = (username, count,balanceFiles) => {
         return axios.post(`${ApiUrl}/increaseBalance`, {
             username,
-            count
+            count,
+            balanceFiles
         });
     };
     // 调用API增加出勤和击杀
@@ -287,7 +288,7 @@ function BalanceCount({ currentUser }) {
                 ></textarea>
                 <div>
                 <p>请不要重复点击！</p>
-                <button onClick={() => addBalance()}>发放军饷</button>
+                <button onClick={() => addBalance(balanceFiles[0])}>发放军饷</button>
                 <p>请不要重复点击！</p>
                 </div>
             </div>
