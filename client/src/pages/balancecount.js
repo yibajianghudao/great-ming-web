@@ -12,6 +12,9 @@ function BalanceCount({ currentUser }) {
     const [balanceResultText, setBalanceResultText] = useState(''); // 新添加的状态
     const [balanceToAdd, setBalanceToAdd] = useState(0);
 
+    // 用于n倍读取文件
+    const [numb, setnumb] = useState('');
+
 
 
 
@@ -113,6 +116,41 @@ function BalanceCount({ currentUser }) {
             });
     };
 
+      const readbalanceFileN = (filename) => {
+          // 调用读取文件的 API
+          axios.get(`${ApiUrl}/readBalanceFile/${filename}`)
+              .then(response => {
+                  // 从 API 响应中获取数据
+                  const data = response.data;
+
+                  // 从数据中分离有效和无效用户名
+                  const validUsernames = data.validUsernames || [];
+                  const invalidUsernames = data.invalidUsernames || [];
+
+                  // 格式化有效用户名和无效用户名
+                  const formattedValidUsernames = validUsernames.map(user => {
+                      return `username:${user.username},company:${user.company},attendance:${Number(user.attendance)*numb},kills:${Number(user.kills)*numb}\n`;
+                  });
+
+                  const formattedInvalidUsernames = invalidUsernames.map(user => {
+                      return `username:${user.username},attendance:${Number(user.attendance)*numb},kills:${Number(user.kills)*numb}\n`;
+                  });
+
+
+                  // 将格式化后的数据更新到状态
+                  setValidUsernames(formattedValidUsernames.join('\n'));
+                  setInvalidUsernames(formattedInvalidUsernames.join('\n'));
+
+                  // 生成文本框内容
+                  const balanceText = generateBalanceTextN(validUsernames);
+                  setBalanceResultText(balanceText);
+              })
+              .catch(error => {
+                  setValidUsernames('读取文件出错: ' + error.message);
+                  setInvalidUsernames('读取文件出错: ' + error.message);
+              });
+      };
+
     // 新添加的函数，用于生成balance文本
     const generateBalanceText = (validUsernames) => {
         const balanceTextArray = [];
@@ -146,6 +184,50 @@ function BalanceCount({ currentUser }) {
             }
                 
                 
+
+            balanceTextArray.push(`姓名：${username},增加的军饷数：${balanceToAdd},出勤数${attendance}`);
+        });
+
+        return balanceTextArray.join('\n');
+    };
+
+    const generateBalanceTextN = (validUsernames) => {
+        const balanceTextArray = [];
+        validUsernames.forEach(user => {
+            let { company, kills, username, attendance } = user;
+
+            kills = Number(kills) * numb;
+
+            attendance = Number(attendance) * numb;
+
+            let balanceToAdd = 0;
+
+            if (company === 'WJ' || company === 'SJ') {
+                if (kills > 30) {
+                    balanceToAdd = 1;
+                }
+            } else if (company === 'SQ') {
+                if (kills > 50) {
+                    balanceToAdd = 1;
+                }
+            } else if (company === 'SJP') {
+                const totalSJPkills = validUsernames
+                    .filter(u => u.company === 'SJP')
+                    .reduce((total, u) => total + parseInt(u.kills), 0);
+
+                if (totalSJPkills > 120) {
+                    balanceToAdd = 1;
+                }
+            }
+            if (attendance >= 3 && attendance < 6 ) {
+                balanceToAdd += 1
+            } else if (attendance >= 6 && attendance < 8){
+                balanceToAdd += 2
+            } else if (attendance >= 8) {
+                balanceToAdd += 3
+            }
+
+
 
             balanceTextArray.push(`姓名：${username},增加的军饷数：${balanceToAdd},出勤数${attendance}`);
         });
@@ -267,6 +349,11 @@ function BalanceCount({ currentUser }) {
                             <button onClick={() => handleDownloadFile(file, 'balance')}>下载文件</button>
                             <button onClick={() => handleDeleteFile(file, 'balance')}>删除文件</button>
                             <button onClick={() => readbalanceFile(file)}>读取该文件</button>
+                            <input
+                                value={numb} // ...强制输入框的值与 state 相匹配...
+                                onChange={e => setnumb(e.target.value)}
+                            />
+                            <button onClick={() => readbalanceFileN(file)}>倍读取该文件</button>
                         </li>
                     ))}
                 </ul>
