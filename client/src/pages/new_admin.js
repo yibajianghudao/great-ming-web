@@ -74,13 +74,12 @@ export default function Admin({ currentUser }) {
     // 保存已编辑的用户数据
     const handleSave = () => {
         // 创建一个日期对象，假设 enrollmentTime 是一个 ISO 格式的日期时间字符串
-        const formattedEnrollmentTime =new Date(user.enrollmentTime).toISOString().slice(0, 19).replace('T', ' '); // 转换日期时间格式                    balance: updatedBalance,
+        //const formattedEnrollmentTime =new Date(user.enrollmentTime).toISOString().slice(0, 19).replace('T', ' '); // 转换日期时间格式                    balance: updatedBalance,
 
     
         // 将 enrollmentTimeStr 用作发送给后端的日期时间值
         const updatedUser = {
             ...editingUser,
-            enrollmentTime: formattedEnrollmentTime,
         };
     
         // 调用API来更新数据库中的数据，使用 updatedUser 的数据
