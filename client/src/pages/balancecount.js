@@ -5,6 +5,7 @@ import {ApiUrl} from "./config";
 
 function BalanceCount({ currentUser }) {
     const [balanceFiles, setBalanceFiles] = useState([]);
+    const [currentBalancefiles, setCurrentBalancefiles] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
     const [validUsernames, setValidUsernames] = useState([]);
     const [invalidUsernames, setInvalidUsernames] = useState([]);
@@ -76,6 +77,8 @@ function BalanceCount({ currentUser }) {
       };
 
       const readbalanceFile = (filename) => {
+        //记录文件名 
+        setCurrentBalancefiles(filename);
         // 调用读取文件的 API
         axios.get(`${ApiUrl}/readBalanceFile/${filename}`)
             .then(response => {
@@ -289,7 +292,7 @@ function BalanceCount({ currentUser }) {
                 ></textarea>
                 <div>
                 <p>请不要重复点击！</p>
-                <button onClick={() => addBalance(balanceFiles[0])}>发放军饷</button>
+                <button onClick={() => addBalance(currentBalancefiles)}>发放军饷</button>
                 <p>请不要重复点击！</p>
                 </div>
             </div>
