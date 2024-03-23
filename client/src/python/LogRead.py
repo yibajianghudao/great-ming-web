@@ -49,30 +49,33 @@ def process_log_files(input_dir, output_dir):
                     line_list = line.split(' ')
                     if len(line_list) > 3:
                         if line_list[3][0:9] == "GreatMing":
-                            name_list = line_list[3].split('_')
-                            group = name_list[1]
-                            if len(name_list) > 3:
-                                name_ = line_list[3][9:]
-                                name_list_ = name_.split('_')
-                                name = name_list_[2]
-                                if len(name_list_) > 4:
-                                    name = name_list_[2] + '_' + name_list_[3]
-                                # if line_list[4][0] == '<' and "20:10:00" < line_list[1] < "21:30：00":
-                                if line_list[4][0] == '<':
-                                    if name not in result.keys():
-                                        result[name] = 0
-                                    result[name] += 1
-                                tk = find_TK(line)
-                                if tk:
-                                    # print(tk)
-                                    # print(line)
-                                    name_tk_ = tk[9:]
-                                    name_tk_list_ = name_tk_.split('_')
-                                    name_tk = name_tk_list_[2]
-                                    if len(name_tk_list_) > 4:
-                                        name_tk = name_list_[2] + '_' + name_list_[3]
-                                    result[name_tk] -= 1
-                                    # print(f"{name_tk}击杀了一名友军")
+                            try:
+                                name_list = line_list[3].split('_')
+                                group = name_list[1]
+                                if len(name_list) > 3:
+                                    name_ = line_list[3][9:]
+                                    name_list_ = name_.split('_')
+                                    name = name_list_[2]
+                                    if len(name_list_) > 4:
+                                        name = name_list_[2] + '_' + name_list_[3]
+                                    # if line_list[4][0] == '<' and "20:10:00" < line_list[1] < "21:30：00":
+                                    if line_list[4][0] == '<':
+                                        if name not in result.keys():
+                                            result[name] = 0
+                                        result[name] += 1
+                                    tk = find_TK(line)
+                                    if tk:
+                                        # print(tk)
+                                        # print(line)
+                                        name_tk_ = tk[9:]
+                                        name_tk_list_ = name_tk_.split('_')
+                                        name_tk = name_tk_list_[2]
+                                        if len(name_tk_list_) > 4:
+                                            name_tk = name_list_[2] + '_' + name_list_[3]
+                                        result[name_tk] -= 1
+                                        # print(f"{name_tk}击杀了一名友军")
+                            except IndexError:
+                                    print(f"行{line_list[3]}出错！")
 
 
 
