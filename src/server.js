@@ -842,24 +842,12 @@ app.post('/api/increaseBalance', (req, res) => {
         let totalBalance = parseInt(count, 10);
         //console.log(attendance)
         if (attendance >=3){
-            if (attendance >=6){
-
-                if (attendance >=8){
-                    totalBalance = parseInt(count, 10) + rankBalance+2;
-                    description_salary = `出勤击杀获得军饷：${count} 出勤小于八次，获得额外军衔 ${userRank} 奖励：${rankBalance+2}，${month} 月总共获得军饷： ${totalBalance}`;}
-
-                else{                
-                    totalBalance = parseInt(count, 10) + rankBalance+1;
-                    description_salary = `出勤击杀获得军饷：${count} 出勤满足六次，获得额外军衔 ${userRank} 奖励：${rankBalance+1}， ${month} 月总共获得军饷： ${totalBalance}`;}
-            }
-            else{
-                totalBalance = parseInt(count, 10) + rankBalance;
-                description_salary = `出勤击杀获得军饷：${count} 出勤满足三次，获得额外军衔 ${userRank} 奖励：${rankBalance}， ${month} 月总共获得军饷： ${totalBalance}`;}
+            totalBalance = parseInt(count, 10) + rankBalance;
+            description_salary = `${month} 月军饷 ${totalBalance} 出勤击杀军饷：${count} 出勤满三次，额外军衔 ${userRank} 奖励：${rankBalance}`;
         }
-    
         else{
             totalBalance = parseInt(count, 10);
-            description_salary = `出勤击杀获得军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}，${month} 月总共获得军饷： ${totalBalance}`;
+            description_salary = `${month} 月军饷 ${totalBalance} 出勤击杀军饷：${count} 出勤小于三次，未获得额外军衔 ${userRank} 奖励：${rankBalance}`;
         }
         
         
