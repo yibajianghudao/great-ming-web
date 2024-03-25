@@ -797,15 +797,16 @@ app.post('/api/increaseBalance', (req, res) => {
 
                 if (attendance >=8){
                     totalBalance = parseInt(count, 10) + rankBalance+2;
-                    description_salary = `${month} 月军饷 ${totalBalance} 出勤击杀军饷：${count} 出勤满八次，额外军衔 ${userRank} 奖励：${rankBalance}`;}
+                    description_salary = `出勤击杀获得军饷：${count} 出勤小于八次，未获得额外军衔 ${userRank} 奖励：${rankBalance}，${month} 总共获得军饷： ${totalBalance}`;}
 
                 else{                
                     totalBalance = parseInt(count, 10) + rankBalance+1;
-                    description_salary = `${month} 月军饷 ${totalBalance} 出勤击杀军饷：${count} 出勤满六次，额外军衔 ${userRank} 奖励：${rankBalance}`;}
+                    description_salary = `出勤击杀获得军饷：${count} 出勤满足六次，获得额外军衔 ${userRank} 奖励：${rankBalance+1}， ${month} 月总共获得军饷： ${totalBalance}`;}
             }
+            else{
+                totalBalance = parseInt(count, 10) + rankBalance;
+                description_salary = `出勤击杀获得军饷：${count} 出勤满足三次，获得额外军衔 ${userRank} 奖励：${rankBalance}， ${month} 月总共获得军饷： ${totalBalance}`;}
         }
-
-
     
         else{
             totalBalance = parseInt(count, 10);
