@@ -87,8 +87,9 @@ handleDisconnect(); // 我不确定应该在这里调用这个函数还是在每
 
 app.use('/api/login', (req, res) => {
     //console.log(req.body.password);
+    handleDisconnect();
 
-    db.connect();
+      
     let updateQuery = 'SELECT users.password FROM users WHERE username = ? ';
     db.query(updateQuery, [req.body.username], (err, result) => {
         //res.json(result);
@@ -111,7 +112,7 @@ app.use('/api/login', (req, res) => {
         }
         if(err) throw err;
         });
-    db.end();
+      
 
 
     });
@@ -127,7 +128,7 @@ app.use('/api/login', (req, res) => {
     // });
 
 app.post('/api/register', (req, res) => {
-    db.connect();
+      
     const { username, tag, ranks, company, kills, attendance, balance, password, enrollmentTime } = req.body;
 
     // 在此处添加逻辑来验证用户输入，例如检查用户名是否已存在等。
@@ -158,35 +159,35 @@ app.post('/api/register', (req, res) => {
             }
         }
     });
-    db.end();
+      
 });
 
 // Fetch all user details
 app.get('/api/users/:username', (req, res) => {
-    db.connect();
+      
     console.log("Fetching details for:", req.params.username);
     db.query('SELECT * FROM users WHERE username = ?', [req.params.username], (err, results) => {
         if(err) throw err;
         res.json(results);
         
     });
-    db.end();
+      
 });
 
 // Update user details (this is just a sample for username)
 app.put('/api/users/:id', (req, res) => {
-    db.connect();
+      
     let updateQuery = 'UPDATE users SET username = ? WHERE id = ?';
     db.query(updateQuery, [req.body.username, req.params.id], (err, result) => {
         if(err) throw err;
         res.json({message: 'User updated successfully'});
     });
-    db.end();
+      
 });
 
 // 定义一个API端点以获取所有用户信息
 app.get('/api/getAllUsers', (req, res) => {
-    db.connect();
+      
     // 查询数据库以检索所有用户信息
     db.query('SELECT * FROM users', (err, results) => {
         if (err) {
@@ -197,12 +198,12 @@ app.get('/api/getAllUsers', (req, res) => {
         // 将所有用户信息作为JSON响应发送
         res.json(results);
     });
-    db.end();
+      
 });
 
 // Update user details for all attributes based on username
 app.put('/api/updateUser/:username', (req, res) => {
-    db.connect();
+      
     const username = req.params.username;
     const {
         tag,
@@ -239,12 +240,12 @@ app.put('/api/updateUser/:username', (req, res) => {
             }
         }
     );
-    db.end();
+      
 });
 
 
 app.put('/api/updatePassword', (req, res) => {
-    db.connect();
+      
     const username = req.body.username; 
     const newPassword = req.body.newPassword; // 新密码
   
@@ -267,13 +268,13 @@ app.put('/api/updatePassword', (req, res) => {
         }
       }
     );
-    db.end();
+      
   });
 
 
 
 app.delete('/api/deleteUser/:username', (req, res) => {
-    db.connect();
+      
     const username = req.params.username;
 
     // 构建删除查询语句
@@ -290,12 +291,12 @@ app.delete('/api/deleteUser/:username', (req, res) => {
             res.status(200).json({ message: '用户已成功删除' });
         }
     });
-    db.end();
+      
 });
 
 // 获取所有商品
 app.get('/api/products', (req, res) => {
-    db.connect();
+      
     db.query('SELECT * FROM products', (err, results) => {
         if (err) {
             res.status(500).json({ error: '检索产品数据时出错' });
@@ -303,12 +304,12 @@ app.get('/api/products', (req, res) => {
         }
         res.json(results);
     });
-    db.end();
+      
 });
 
 //新增商品
 app.post('/api/products', (req, res) => {
-    db.connect();
+      
     const { name, price, quantity, description, image_url } = req.body;
     const insertQuery = 'INSERT INTO products (name, price, quantity, description, image_url) VALUES (?, ?, ?, ?, ?)';
     db.query(
@@ -332,12 +333,12 @@ app.post('/api/products', (req, res) => {
             }
         }
     );
-    db.end();
+      
 });
 
 // 删除商品
 app.delete('/api/products/:id', (req, res) => {
-    db.connect();
+      
     const productId = req.params.id;
     const deleteQuery = 'DELETE FROM products WHERE id = ?';
     db.query(deleteQuery, [productId], (err, result) => {
@@ -349,12 +350,12 @@ app.delete('/api/products/:id', (req, res) => {
             res.status(200).json({ message: '产品已成功删除' });
         }
     });
-    db.end();
+      
 });
 
 // 修改商品
 app.put('/api/products/:id', (req, res) => {
-    db.connect();
+      
     const productId = req.params.id;
     const { name, price, quantity, description, image_url } = req.body;
     const updateQuery = `
@@ -383,12 +384,12 @@ app.put('/api/products/:id', (req, res) => {
             }
         }
     );
-    db.end();
+      
 });
 
 // 查询所有订单
 app.get('/api/orders', (req, res) => {
-    db.connect();
+      
     db.query('SELECT * FROM orders', (err, results) => {
         if (err) {
             res.status(500).json({ error: '检索订单数据时出错' });
@@ -396,12 +397,12 @@ app.get('/api/orders', (req, res) => {
         }
         res.json(results);
     });
-    db.end();
+      
 });
 
 // 创建新订单
 app.post('/api/orders', (req, res) => {
-    db.connect();
+      
     const { user_name, product_name, product_price } = req.body;
     const insertQuery = 'INSERT INTO orders (user_name, product_name, product_price) VALUES (?, ?, ?)';
     db.query(
@@ -424,11 +425,11 @@ app.post('/api/orders', (req, res) => {
             }
         }
     );
-    db.end();
+      
 });
 
 app.delete('/api/orders/:id', (req, res) => {
-    db.connect();
+      
     const orderId = req.params.id;
     const deleteQuery = 'DELETE FROM orders WHERE id = ?';
     db.query(deleteQuery,[orderId], (err, result) => {
@@ -440,7 +441,7 @@ app.delete('/api/orders/:id', (req, res) => {
             res.status(200).json({ message: '订单已成功删除' });
         }
     });
-    db.end();
+      
 });
 
 
@@ -448,7 +449,7 @@ app.delete('/api/orders/:id', (req, res) => {
 const fs = require('fs');
 // 读取log文件夹下所有文件名
 app.post('/api/getLogFiles', (req, res) => {
-    db.connect();
+      
     const logDirectory = './client/src/python/log'; // 请替换为你的日志目录路径
 
     fs.readdir(logDirectory, (err, files) => {
@@ -459,7 +460,7 @@ app.post('/api/getLogFiles', (req, res) => {
             res.status(200).json({ logFiles: files });
         }
     });
-    db.end();
+      
 });
 
 // // 上传logfile文件：
@@ -511,7 +512,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post('/api/uploadFile', upload.single('file'), (req, res) => {
-    db.connect();
+      
     try {
         if (req.file) {
             res.status(200).json({ message: '文件上传成功', path: req.query.path });
@@ -522,7 +523,7 @@ app.post('/api/uploadFile', upload.single('file'), (req, res) => {
         console.error('上传文件时发生错误：', error);
         res.status(500).json({ error: '服务器内部错误' });
     }
-    db.end();
+      
 });
 
 //尝试给每个月份目录后面添加上传文件按钮，失败
@@ -551,7 +552,7 @@ app.post('/api/uploadFile', upload.single('file'), (req, res) => {
 
 // 下载文件的API端点
 app.get('/api/downloadLogFile/:item/:filename', (req, res) => {
-    db.connect();
+      
     const item = req.params.item;
     const filename = req.params.filename;
     
@@ -569,7 +570,7 @@ app.get('/api/downloadLogFile/:item/:filename', (req, res) => {
         filePath = path.join('./client/src/python/log', filename);
     }
     res.download(filePath); // 使用res.download来触发文件下载
-    db.end();
+      
 });
 // app.get('/downloadLogFile/:filename', (req, res) => {
 //     const filename = req.params.filename;
@@ -590,7 +591,7 @@ app.get('/api/downloadLogFile/:item/:filename', (req, res) => {
 
 // 删除文件的API端点
 app.delete('/api/deleteLogFile/:item/:filename', (req, res) => {
-    db.connect();
+      
     const item = req.params.item;
     const filename = req.params.filename;
     let filePath;
@@ -619,7 +620,7 @@ app.delete('/api/deleteLogFile/:item/:filename', (req, res) => {
             res.status(200).json({ message: '文件已成功删除' });
         }
     });
-    db.end();
+      
 });
 // app.delete('/deleteLogFile/:filename', (req, res) => {
 //     const filename = req.params.filename;
@@ -671,7 +672,7 @@ app.delete('/api/deleteLogFile/:item/:filename', (req, res) => {
 
 // API端点来获取含有文件的子目录和文件名
 app.get('/api/subdirectoriesWithFiles', (req, res) => {
-    db.connect();
+      
     const directoryPath = './client/src/python/logreaded'; // 指定目录路径
 
     // 使用fs.readdirSync获取目录中的所有子目录
@@ -697,12 +698,12 @@ app.get('/api/subdirectoriesWithFiles', (req, res) => {
     });
 
     res.json(directoriesWithFiles);
-    db.end();
+      
 });
 
 // 每月总结文件
 app.get('/api/txtFilesInDirectory', (req, res) => {
-    db.connect();
+      
     const directoryPath = './client/src/python/logreaded'; // 指定目录路径
 
     // 使用fs.readdirSync获取目录中的文件列表
@@ -712,13 +713,13 @@ app.get('/api/txtFilesInDirectory', (req, res) => {
     const txtFiles = directoryContents.filter((fileName) => fileName.endsWith('.txt'));
 
     res.json(txtFiles);
-    db.end();
+      
 });
 
 // 下面是执行Python代码的api
 
 app.post('/api/runPythonScript', (req, res) => {
-    db.connect();
+      
     const { scriptPathAndName } = req.body; // 从请求体中获取脚本路径和名称的字符串
   
     if (!scriptPathAndName) {
@@ -736,13 +737,13 @@ app.post('/api/runPythonScript', (req, res) => {
       console.log(`Python脚本输出:\n ${stdout}`);
       res.status(200).json({ stdout });
     });
-    db.end();
+      
   });
 
 
 // 军饷读取文件列表
 app.get('/api/balanceFilesInDirectory', (req, res) => {
-    db.connect();
+      
     const directoryPath = './client/src/python/balancefiles'; // 修改为指定目录路径
 
     // 使用fs.readdirSync获取目录中的文件列表
@@ -752,7 +753,7 @@ app.get('/api/balanceFilesInDirectory', (req, res) => {
     const balanceFiles = directoryContents.filter((fileName) => fileName.endsWith('.txt'));
 
     res.json(balanceFiles);
-    db.end();
+      
 });
 
 
@@ -772,7 +773,7 @@ const upload_ba = multer({ storage: storage_ba });
 
 // 添加一个中间件来处理文件上传
 app.post('/api/uploadLogFileba', upload_ba.single('logfile'), (req, res) => {
-    db.connect();
+      
     // 记录请求
     console.log('Received a file upload request.');
 
@@ -785,12 +786,12 @@ app.post('/api/uploadLogFileba', upload_ba.single('logfile'), (req, res) => {
         console.error('File upload failed.');
         res.status(400).json({ error: '文件上传失败' });
     }
-    db.end();
+      
 });
 
 // 读取军饷文件中的用户名，返回正确的用户名
 app.get('/api/readBalanceFile/:filename', (req, res) => {
-    db.connect();
+      
     const filename = req.params.filename;
 
     // 1. 读取军饷文件
@@ -832,12 +833,12 @@ app.get('/api/readBalanceFile/:filename', (req, res) => {
             });
         });
     });
-    db.end();
+      
 });
 
 // 更新用户的军饷数据
 app.post('/api/increaseBalance', (req, res) => {
-    db.connect();
+      
     const { username, count, balanceFiles ,attendance} = req.body;
     const currentTime = new Date();
     const month = balanceFiles.split('.')[0]; // Assuming balanceFiles is like '01.txt'
@@ -903,12 +904,12 @@ app.post('/api/increaseBalance', (req, res) => {
         });
 
     });
-    db.end();
+      
 });
 
 // 更新用户的出勤击杀数据
 app.post('/api/increaseAK', (req, res) => {
-    db.connect();
+      
     const { username, attendance, kills } = req.body;
 
     // 构建更新用户的 balance 查询语句，使用LOWER函数使查询不区分大小写
@@ -930,7 +931,7 @@ app.post('/api/increaseAK', (req, res) => {
             }
         }
     );
-    db.end();
+      
 });
 
 // 用于每月按照军衔发放军饷，暂时弃用
@@ -985,7 +986,7 @@ app.post('/api/increaseAK', (req, res) => {
 
 // 备份数据库
 app.get('/api/backup/make', (req, res) => {    // 生成唯一的文件名，使用当前时间戳
-    db.connect();
+      
     const timestamp = new Date().getTime();
     const backupFileName = `backup_${timestamp}.sql`;
     const backupFilePath = path.join('./client/src/backups', backupFileName);
@@ -1002,11 +1003,11 @@ app.get('/api/backup/make', (req, res) => {    // 生成唯一的文件名，使
             res.json({ message: '数据库备份成功', fileName: backupFileName });
         }
     });
-    db.end();
+      
 });
 // 列出备份文件的 API 端点
 app.get('/api/backup/list', (req, res) => {
-    db.connect();
+      
     // const backupFolder = path.join(__dirname, 'backups');
     const backupFolder = './client/src/backups'
     // 读取备份文件夹中的备份文件列表
@@ -1022,7 +1023,7 @@ app.get('/api/backup/list', (req, res) => {
 
 // 下载特定备份文件的 API 端点
 app.get('/api/backup/download/:fileName', (req, res) => {
-    db.connect();
+      
     const fileName = req.params.fileName;
     const filePath = path.join('./client/src/backups', fileName);
 
@@ -1032,12 +1033,12 @@ app.get('/api/backup/download/:fileName', (req, res) => {
     } else {
         res.status(404).json({ error: 'File not found' });
     }
-    db.end();
+      
 });
 
 // 从备份文件中还原数据库的 API 端点
 app.post('/api/backup/restore/:fileName', (req, res) => {
-    db.connect();
+      
     const fileName = req.params.fileName;
     const filePath = path.join('./client/src/backups', fileName);
 
@@ -1057,7 +1058,7 @@ app.post('/api/backup/restore/:fileName', (req, res) => {
     } else {
         res.status(404).json({ error: 'File not found' });
     }
-    db.end();
+      
 });
 
 //设置头像上传
@@ -1075,7 +1076,7 @@ const upload_avatar = multer({ storage:storageAva });
 
 //头像上传API
 app.post('/api/users/:username/avatar', upload_avatar.single('avatar'), (req, res) => {
-    db.connect();
+      
     const username = req.params.username;
     const file = req.file;
 
@@ -1098,7 +1099,7 @@ app.post('/api/users/:username/avatar', upload_avatar.single('avatar'), (req, re
             avatar: filePath
         });
     });
-    db.end();
+      
 });
 
 
