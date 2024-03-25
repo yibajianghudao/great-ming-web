@@ -67,6 +67,7 @@ function handleDisconnect() {
             throw err;                                  // server variable configures this)
         }
     });
+    console.log('handleDisconnect is called.')
 }
 
 
